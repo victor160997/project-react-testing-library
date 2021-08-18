@@ -59,6 +59,7 @@ describe('Teste o componente <Pokedex.js />', () => {
 });
 
 describe('Teste se a Pokédex tem os botões de filtro', () => {
+  const nameId = 'pokemon-name';
   it('Deve existir um botão de filtragem para cada', () => {
     const customHistory = createMemoryHistory();
     render(
@@ -94,5 +95,16 @@ describe('Teste se a Pokédex tem os botões de filtro', () => {
 
     const charmander = screen.getByText(/Charmander/i);
     expect(charmander.textContent).toBe('Charmander');
+  });
+
+  it('O texto do botão deve corresponder ao nome do tipo', () => {
+    const customHistory = createMemoryHistory();
+    render(
+      <Router history={ customHistory }>
+        <App />
+      </Router>,
+    );
+    const pokeName = screen.getByTestId(nameId);
+    expect(pokeName).toBeInTheDocument();
   });
 });
