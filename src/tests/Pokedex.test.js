@@ -4,6 +4,7 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
+import pokemons from '../data';
 
 describe('Teste o componente <Pokedex.js />', () => {
   const nameId = 'pokemon-name';
@@ -104,7 +105,31 @@ describe('Teste se a Pokédex tem os botões de filtro', () => {
         <App />
       </Router>,
     );
-    const pokeName = screen.getByTestId(nameId);
+    let pokeName = screen.getByTestId(nameId);
+    const have = pokemons.map((poke) => poke.name);
+    if (!have.includes(pokeName.textContent)) {
+      pokeName = '';
+    }
     expect(pokeName).toBeInTheDocument();
   });
+});
+
+describe('Teste se a Pokédex contém um botão para resetar o filtro', () => {
+  const nameId = 'pokemon-name';
+  it('A Pokedéx deverá mostrar os Pokémons normalmente', () => {
+    const customHistory = createMemoryHistory();
+    render(
+      <Router history={ customHistory }>
+        <App />
+      </Router>,
+    );
+
+    const all = screen.getByText(/ALL/i);
+    expect(all).toBeInTheDocument();
+
+    userEvent.click(all);
+    const pokeName = screen.getAllByTestId(nameId);
+    expect(pokeName[0].textContent).toBe('Pikachu');
+  });
+
 });
