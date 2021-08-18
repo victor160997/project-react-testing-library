@@ -6,7 +6,7 @@ import App from '../App';
 import renderWithRouter from '../renderWithRouter';
 
 describe('Requisito 6', () => {
-  it('', () => {
+  it('Verifica e o card do pokemon é renderizado como deve', () => {
     const { history } = renderWithRouter(<App />);
 
     const pikachuName = screen.getByTestId('pokemon-name');
@@ -38,5 +38,6 @@ describe('Requisito 6', () => {
 
     const pikachuFavIcon = screen.getByAltText('Pikachu is marked as favorite');
     expect(pikachuFavIcon).toBeInTheDocument();
+    expect(pikachuFavIcon).toHaveAttribute('src', '/star-icon.svg');
   });
 });
