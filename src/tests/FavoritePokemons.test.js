@@ -53,6 +53,7 @@ describe('Requisito 3', () => {
 
     const pikachuFavIcon = screen.getByAltText('Pikachu is marked as favorite');
     expect(pikachuFavIcon).toBeInTheDocument();
+    expect(pikachuFavIcon).toHaveAttribute('src', '/star-icon.svg');
 
     // Charmander
     const charmanderName = screen.getByText('Charmander');
@@ -70,5 +71,6 @@ describe('Requisito 3', () => {
 
     const charmanderFavIcon = screen.getByAltText('Charmander is marked as favorite');
     expect(charmanderFavIcon).toBeInTheDocument();
+    expect(charmanderFavIcon).toHaveAttribute('src', '/star-icon.svg');
   });
 });
