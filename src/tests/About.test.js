@@ -3,6 +3,16 @@ import { render, screen } from '@testing-library/react';
 import About from '../components/About';
 
 describe('About Component', () => {
+  test('Info', () => {
+    render(
+      <About />,
+    );
+
+    screen.getByRole('heading');
+    screen.getByText(/application/);
+    screen.getByText(/details/);
+  });
+
   test('Heading', () => {
     render(
       <About />,
@@ -13,14 +23,16 @@ describe('About Component', () => {
     expect(heading.textContent).toBe('About Pokédex');
   });
 
-  test('Pokedex info', () => {
+  test('Texts', () => {
     render(
       <About />,
     );
 
-    const infoArr = screen.getAllByTestId('about-info');
+    const info1 = screen.getByText(/application/);
+    const info2 = screen.getByText(/details/);
 
-    expect(infoArr.length).toBe(2);
+    expect(info1.textContent).toMatch(/application/);
+    expect(info2.textContent).toMatch(/details/);
   });
 
   test('Image', () => {
