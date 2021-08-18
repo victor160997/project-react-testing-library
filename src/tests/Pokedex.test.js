@@ -6,8 +6,8 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import pokemons from '../data';
 
+const nameId = 'pokemon-name';
 describe('Teste o componente <Pokedex.js />', () => {
-  const nameId = 'pokemon-name';
   it('Teste se página contém um heading h2 com o texto', () => {
     const customHistory = createMemoryHistory();
     render(
@@ -60,7 +60,6 @@ describe('Teste o componente <Pokedex.js />', () => {
 });
 
 describe('Teste se a Pokédex tem os botões de filtro', () => {
-  const nameId = 'pokemon-name';
   it('Deve existir um botão de filtragem para cada', () => {
     const customHistory = createMemoryHistory();
     render(
@@ -115,7 +114,6 @@ describe('Teste se a Pokédex tem os botões de filtro', () => {
 });
 
 describe('Teste se a Pokédex contém um botão para resetar o filtro', () => {
-  const nameId = 'pokemon-name';
   it('A Pokedéx deverá mostrar os Pokémons normalmente', () => {
     const customHistory = createMemoryHistory();
     render(
@@ -131,5 +129,4 @@ describe('Teste se a Pokédex contém um botão para resetar o filtro', () => {
     const pokeName = screen.getAllByTestId(nameId);
     expect(pokeName[0].textContent).toBe('Pikachu');
   });
-
 });
