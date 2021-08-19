@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import pokemons from '../data';
-import * as service from '../services/pokedexService';
+import Pokemon from '../components/Pokemon';
 
 const pokemonName = 'pokemon-name';
 describe('Teste o componente <Pokemon.js />', () => {
@@ -127,28 +127,12 @@ describe('Teste o componente <Pokemon.js />', () => {
     const customHistory = createMemoryHistory();
     render(
       <Router history={ customHistory }>
-        <App />
+        <Pokemon pokemon={ pokemons[0] } isFavorite />
       </Router>,
     );
-
-    const name = screen.getByTestId(pokemonName);
-    const linkPoke = screen.getByRole('link', {
-      name: /More details/i,
-    });
-    userEvent.click(linkPoke);
-    const pokeId = pokemons.find((poke) => poke.name === name.textContent);
-    const favorites = service.readFavoritePokemonIds();
-    if (favorites.includes(pokeId.id)) {
-      const star = screen.getByAltText(`${pokeId.name} is marked as favorite`);
-      expect(star).toBeInTheDocument();
-      expect(star.src).toBe('/star-icon.svg');
-    } else {
-      const aparece = screen.queryByAltText(`${pokeId.name} is marked as favorite`);
-      expect(aparece).toBeNull();
-      const images = screen.queryAllByRole('img', {
-        name: `${pokeId.name} is marked as favorite`,
-      });
-      expect(images).toEqual([]);
-    }
+    const star = screen.getByAltText(`${pokemons[0].name} is marked as favorite`);
+    const { src } = star;
+    const caminho = src.split('/');
+    expect(caminho[caminho.length - 1]).toBe('star-icon.svg');
   });
 });
