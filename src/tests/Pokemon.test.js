@@ -139,8 +139,9 @@ describe('Teste o componente <Pokemon.js />', () => {
     const pokeId = pokemons.find((poke) => poke.name === name.textContent);
     const favorites = service.readFavoritePokemonIds();
     if (favorites.includes(pokeId.id)) {
-      const star = screen.getByAltText(`${pokeId} is marked as favorite`);
+      const star = screen.getByAltText(`${pokeId.name} is marked as favorite`);
       expect(star).toBeInTheDocument();
+      expect(star.src).toBe('/star-icon.svg');
     }
   });
 });
