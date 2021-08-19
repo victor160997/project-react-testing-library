@@ -5,7 +5,9 @@ import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import pokemons from '../data';
+import * as service from '../services/pokedexService';
 
+const pokemonName = 'pokemon-name';
 describe('Teste o componente <Pokemon.js />', () => {
   it('Teste se é renderizado um card com as informações', () => {
     const customHistory = createMemoryHistory();
@@ -15,7 +17,7 @@ describe('Teste o componente <Pokemon.js />', () => {
       </Router>,
     );
     // O nome e o tipo correto do Pokémon deve ser mostrado na tela
-    const firstPokemon = screen.getByTestId('pokemon-name');
+    const firstPokemon = screen.getByTestId(pokemonName);
     const firstPokemonType = screen.getByTestId('pokemon-type');
     expect(firstPokemon.textContent).toBe('Pikachu');
     expect(firstPokemonType.textContent).toBe('Electric');
@@ -39,7 +41,7 @@ describe('Teste o componente <Pokemon.js />', () => {
     userEvent.click(botao);
 
     // O nome e o tipo correto do Pokémon deve ser mostrado na tela
-    const secondPokemon = screen.getByTestId('pokemon-name');
+    const secondPokemon = screen.getByTestId(pokemonName);
     const secondPokemonType = screen.getByTestId('pokemon-type');
     expect(secondPokemon.textContent).toBe('Caterpie');
     expect(secondPokemonType.textContent).toBe('Bug');
@@ -57,5 +59,88 @@ describe('Teste o componente <Pokemon.js />', () => {
     // A imagem do Pokémon deve ser exibida
     const image = screen.getByAltText(`${secondPokemonWeight.name} sprite`);
     expect(image.src).toBe(secondPokemonWeight.image);
+  });
+
+  it('Teste se o card do Pokémon indicado na Pokédex', () => {
+    const customHistory = createMemoryHistory();
+    render(
+      <Router history={ customHistory }>
+        <App />
+      </Router>,
+    );
+    const has = screen.getByRole('link', {
+      name: /More details/i,
+    });
+
+    expect(has).toBeInTheDocument();
+
+    const pokemonActive = screen.getByTestId(pokemonName);
+    const activeId = pokemons.find((pok) => pok.name === pokemonActive.textContent);
+    expect(has.href).toContain(activeId.id);
+  });
+
+  it('Teste se ao clicar no link de navegação do Pokémon', () => {
+    const customHistory = createMemoryHistory();
+    render(
+      <Router history={ customHistory }>
+        <App />
+      </Router>,
+    );
+    const name = screen.getByTestId(pokemonName);
+    const linkPoke = screen.getByRole('link', {
+      name: /More details/i,
+    });
+
+    userEvent.click(linkPoke);
+
+    const titulo = screen.getByRole('heading', {
+      level: 2,
+      name: `${name.textContent} Details`,
+    });
+
+    expect(titulo).toBeInTheDocument();
+  });
+
+  it('Teste também se a URL exibida no navegador muda', () => {
+    const customHistory = createMemoryHistory();
+    render(
+      <Router history={ customHistory }>
+        <App />
+      </Router>,
+    );
+
+    const name = screen.getByTestId(pokemonName);
+    const linkPoke = screen.getByRole('link', {
+      name: /More details/i,
+    });
+
+    userEvent.click(linkPoke);
+
+    const pokeId = pokemons.find((poke) => poke.name === name.textContent);
+    const { entries } = customHistory;
+    const caminhos = entries.map((cam) => cam.pathname);
+    const atual = caminhos[caminhos.length - 1].split('/');
+    expect(atual[atual.length - 1]).toContain(pokeId.id);
+  });
+
+  it('Teste se existe um ícone de estrela', () => {
+    const customHistory = createMemoryHistory();
+    render(
+      <Router history={ customHistory }>
+        <App />
+      </Router>,
+    );
+
+    const name = screen.getByTestId(pokemonName);
+    const linkPoke = screen.getByRole('link', {
+      name: /More details/i,
+    });
+    userEvent.click(linkPoke);
+    const pokeId = pokemons.find((poke) => poke.name === name.textContent);
+    const favorites = service.readFavoritePokemonIds();
+    if (favorites.includes(pokeId.id)) {
+      const star = screen.getByAltText(`${pokeId} is marked as favorite`);
+      expect(star).toBeInTheDocument();
+    }
   });
 });
