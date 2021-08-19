@@ -79,6 +79,12 @@ describe('Pokedex', () => {
 
     const btnFilterList = screen.getAllByTestId('pokemon-type-button');
 
+    btnFilterList.forEach((btnFilter) => {
+      if (!pokemons.some((poke) => poke.type === btnFilter.textContent)) {
+        fail();
+      }
+    });
+
     expect(btnFilterList.length).toBe(typeArr.length);
 
     //
