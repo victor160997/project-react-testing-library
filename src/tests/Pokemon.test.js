@@ -142,6 +142,13 @@ describe('Teste o componente <Pokemon.js />', () => {
       const star = screen.getByAltText(`${pokeId.name} is marked as favorite`);
       expect(star).toBeInTheDocument();
       expect(star.src).toBe('/star-icon.svg');
+    } else {
+      const aparece = screen.queryByAltText(`${pokeId.name} is marked as favorite`);
+      expect(aparece).toBeNull();
+      const images = screen.queryAllByRole('img', {
+        name: `${pokeId.name} is marked as favorite`,
+      });
+      expect(images).toBeNull();
     }
   });
 });
