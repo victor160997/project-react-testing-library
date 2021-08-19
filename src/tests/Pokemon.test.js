@@ -148,7 +148,7 @@ describe('Teste o componente <Pokemon.js />', () => {
       const images = screen.queryAllByRole('img', {
         name: `${pokeId.name} is marked as favorite`,
       });
-      expect(images).toBeNull();
+      expect(images).toEqual([]);
     }
   });
 });
