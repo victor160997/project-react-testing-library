@@ -53,7 +53,7 @@ test('Teste se ao clicar em "About" é redirecionado a pág about', () => {
 
   const textAbout = screen.getByRole('heading', {
     level: 2,
-    value: 'About Pokédex',
+    name: 'About Pokédex',
   });
 
   expect(textAbout).toBeInTheDocument();
@@ -70,7 +70,7 @@ test('Teste se ao clicar em "Favorite Pokémons" é redirecionado a pág favorit
 
   const textFavorite = screen.getByRole('heading', {
     level: 2,
-    value: 'Favorite pokémons',
+    name: 'Favorite pokémons',
   });
 
   expect(textFavorite).toBeInTheDocument();
@@ -83,7 +83,7 @@ test('Teste se ao clicar em "Favorite Pokémons" é redirecionado a pág favorit
 
   const textNotFound = screen.getByRole('heading', {
     level: 2,
-    value: /not found/i,
+    name: /not found/i,
   });
 
   expect(textNotFound).toBeInTheDocument();
