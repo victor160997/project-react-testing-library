@@ -11,4 +11,4 @@ Neste projeto, foi desenvolvido os seguintes tópicos:
 
 * Criar mocks de APIs utilizando fetch.
 
-* Testar inputs.
+* Testar inputs...
