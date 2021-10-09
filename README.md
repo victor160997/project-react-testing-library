@@ -9,6 +9,6 @@ Neste projeto, foi desenvolvido os seguintes tópicos:
 
 * Escrever testes que permitam a refatoração da estrutura dos componentes da aplicação sem necessidade de serem alterados.
 
-* Criar mocks de APIs utilizando fetch...
+* Criar mocks de APIs utilizando fetch.
 
 * Testar inputs...
