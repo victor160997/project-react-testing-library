@@ -11,4 +11,8 @@ Neste projeto, foi desenvolvido os seguintes tópicos:
 
 * Criar mocks de APIs utilizando fetch.
 
+<<<<<<< HEAD
 * Testar inputs.
+=======
+* Testar inputs...
+>>>>>>> victor16-react-testing
